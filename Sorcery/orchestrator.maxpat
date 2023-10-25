@@ -46,7 +46,6 @@
 					"numoutlets" : 1,
 					"outlettype" : [ "" ],
 					"patching_rect" : [ 605.0, 244.0, 72.0, 22.0 ],
-					"presentation_linecount" : 2,
 					"text" : "127, 80 500"
 				}
 
@@ -6391,7 +6390,6 @@
 									"numoutlets" : 1,
 									"outlettype" : [ "" ],
 									"patching_rect" : [ 240.0, 264.705161789764361, 135.0, 22.0 ],
-									"presentation_linecount" : 2,
 									"text" : "Wizard-DeathWish.mp3"
 								}
 
@@ -6814,8 +6812,7 @@
 									"numoutlets" : 1,
 									"outlettype" : [ "" ],
 									"patching_rect" : [ 1900.774774491786957, 376.000005602836609, 305.200003802776337, 22.0 ],
-									"presentation_linecount" : 7,
-									"text" : "293.66 329.63 349.23 392 440 466.16 523.33"
+									"text" : "220 246.94 277.18 293.66 329.63 369.99 415.3"
 								}
 
 							}
@@ -6827,7 +6824,7 @@
 									"numoutlets" : 1,
 									"outlettype" : [ "" ],
 									"patching_rect" : [ 1574.324773967266083, 376.000005602836609, 293.0, 22.0 ],
-									"text" : "293.66 329.63 349.23 392 440 466.16 523.33"
+									"text" : "220 246.94 277.18 293.66 329.63 369.99 415.3"
 								}
 
 							}
@@ -9973,7 +9970,6 @@
 									"numoutlets" : 1,
 									"outlettype" : [ "" ],
 									"patching_rect" : [ 230.609484374523163, 68.176443071365384, 45.0, 22.0 ],
-									"presentation_linecount" : 2,
 									"text" : "293.66"
 								}
 
@@ -16738,6 +16734,7 @@
 						"style" : "",
 						"subpatcher_template" : "",
 						"assistshowspatchername" : 0,
+						"visible" : 1,
 						"boxes" : [ 							{
 								"box" : 								{
 									"id" : "obj-6",
@@ -17103,8 +17100,8 @@
 									"numinlets" : 2,
 									"numoutlets" : 1,
 									"outlettype" : [ "" ],
-									"patching_rect" : [ 390.229352831840515, 217.203627854585648, 378.0, 22.0 ],
-									"text" : "\"/Users/zackamiton/Code/BrownCS/MUSC 1210/Assignments/Make/\""
+									"patching_rect" : [ 390.229352831840515, 217.203627854585648, 390.0, 22.0 ],
+									"text" : "\"/Users/zackamiton/Code/BrownCS/MUSC 1210/Assignments/Sorcery/\""
 								}
 
 							}
