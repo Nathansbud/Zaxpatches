@@ -2,6 +2,8 @@ autowatch = 1;
 
 var myWindow = new JitterObject("jit.window", "js");
 
+
+
 myWindow.size = [750, 400];
 myWindow.fsaa = 1;
 myWindow.pos = [777, 515];
@@ -22,9 +24,29 @@ var lineWidth_initial = 0.04
 var lifespan = 255;
 var lifespan_decay = 2;
 var ring_thickness = 6;
-var line_width_velocity = 0.008;
+var line_width_velocity = 0.010;
 var circle_radius = 0.04;
 var num_lines = 8;
+var audio1 = 0.2;
+var audio2 = 0.2;
+var audio3 = 0.2;
+var audio4 = 0.2;
+var audio5 = 0.2;
+
+var bar_color = Object.create(Vector);
+bar_color.x = 1.0
+bar_color.y = 0.1
+bar_color.z = 1.0
+
+var bar_velocity = Object.create(Vector);
+bar_velocity.x = 0;
+bar_velocity.y = 0;
+bar_velocity.z = 0; 
+
+var bar_angle = 0;
+
+var phase = 1; 
+
 
 
 
@@ -57,6 +79,23 @@ function Particle() {
    this.depth = 1;
 }; 
 
+function squareParticle(){
+    this.location = Object.create(Vector);
+    this.size = Object.create(Vector);
+    this.velocity = Object.create(Vector);
+    
+    this.id = 1;
+}
+
+squareParticle.prototype.update = function(){
+    //this.lifespan -= lifespan_decay;
+    //this.size.y = audio;
+    //this.size.y -= 0.0001;
+    this.location.x += bar_velocity.x;
+    this.location.y += bar_velocity.y;
+    this.location.z += bar_velocity.z;
+}
+
 Particle.prototype.update = function(isMain) {
    //this.velocity.add(this.acceleration);
    //this.location.add(this.velocity);
@@ -71,7 +110,36 @@ Particle.prototype.update = function(isMain) {
 };
 
 
+squareParticle.prototype.display = function(){
+    mySketch.moveto(this.location.x, this.location.y, this.location.z);
+    mySketch.glcolor(bar_color.x,bar_color.y,bar_color.z,1.0);
+    mySketch.glrotate(bar_angle, 5, 2, 5);
 
+    switch(this.id){
+        case 1:
+            mySketch.cube(this.size.x, audio1, this.size.z);
+
+        
+            break;
+        case 2:
+            mySketch.cube(this.size.x, audio2, this.size.z);
+
+            
+            break;
+        case 3:
+            mySketch.cube(this.size.x, audio3, this.size.z);
+            
+            break;
+        case 4:
+            mySketch.cube(this.size.x, audio4, this.size.z);
+            
+            break;
+        case 5:
+            mySketch.cube(this.size.x, audio5, this.size.z);
+            
+            break;
+    }
+}
 
 Particle.prototype.display = function() {
    mySketch.moveto(this.location.x, this.location.y, this.location.z);
@@ -97,6 +165,11 @@ Particle.prototype.run = function(isMain) {
    this.display();
 }
 
+squareParticle.prototype.run = function(){
+    this.update();
+    this.display();
+}
+
 Particle.prototype.isDead = function() {
    if(this.lifespan < 0.0) {
        return true;
@@ -105,24 +178,47 @@ Particle.prototype.isDead = function() {
    }
 };
 
+
+function death(){
+    myRender.erase_color = [0.0,0.0,0.0,1.0];
+    bar_color.x = 1.0;
+    bar_color.y = 1.0;
+    bar_color.z = 1.0;
+
+    bar_angle = 20.1;
+}
+
 // Particles Array
 var pArray = [];
 var total = 100;
 
+
+
+
 var currColor = Object.create(Vector);
 
-function changeColor(num){
+function ballChange(num){
     switch(num){
         case 1:
             currColor.x = 15/255;
             currColor.y = 104/255;
             currColor.z = 184/255;
+
+            if(phase == 3){
+                bar_angle += 11.1;
+            }
             break;
 
         case 2:
             currColor.x = 165/255;
             currColor.y = 162/255;
             currColor.z = 2/255;
+
+            if(phase == 3){
+                bar_color.x = Math.random();
+                bar_color.y = Math.random();
+                bar_color.z = Math.random();
+            }
 
             break;
         
@@ -132,6 +228,14 @@ function changeColor(num){
             currColor.y = 162/255;
             currColor.z = 2/255;
 
+            if(phase == 3){
+
+                bar_velocity.x = Math.random() * (0.025);
+                bar_velocity.y = Math.random() * (0.025);
+                bar_velocity.z = Math.random() * (0.025);
+                
+            }
+
             break;
 
         case 4:
@@ -140,8 +244,16 @@ function changeColor(num){
             currColor.y = 162/255;
             currColor.z = 2/255;
 
+            if(phase == 3){
+                bar_velocity.x = -bar_velocity.x;
+                bar_velocity.y = -bar_velocity.y;
+                bar_velocity.z = -bar_velocity.z;
+            }
+
             break;
     }
+
+
 
 }
 
@@ -149,6 +261,39 @@ function changeColor(num){
 function warble(){
     num_lines = 4;
 }
+
+
+function receiveAudio1(num){
+    audio1 = num/2;
+    
+}
+
+function receiveAudio2(num){
+    audio2 = num/2;
+    
+}
+
+function receiveAudio3(num){
+    audio3 = num/2;
+    
+}
+
+
+
+function receiveAudio4(num){
+    audio4 = num/2;
+    
+}
+
+
+
+function receiveAudio5(num){
+    audio5 = num/2;
+    
+}
+
+
+
 
 
 function spawn(){
@@ -182,14 +327,57 @@ function spawn(){
     
 }
 
-spawn();
+
+var squareArray = [];
+
+function spawnSquares(){
+
+    var num_squares = 10;
+    var sub_squares = []
+    post("hello");
+    for(var i = 0; i < num_squares; i++){
+        var sub_square = new squareParticle();
+        sub_square.size.x = 0.10;
+        sub_square.size.y = audio;
+        sub_square.size.z = 0.00;
+        sub_square.location.x = -1 + (i * 0.21);
+        sub_square.location.y = 0.0;
+
+        sub_square.id = (i % 5) + 1;
+
+        sub_squares.push(sub_square);
+
+    }
+
+    squareArray.push(sub_squares);
+    
+}
+
+
+
+
+function phase1(){
+    spawn();
+}
+
+function phase2(){
+    spawnSquares();
+}
+
+function phase3(){
+    phase = 3;
+}
+
+
+
 
 function draw() {
-
     
    
   //makes animation endless by adding particles every time draw is called
   
+   
+
 
    for(var i = pArray.length-1; i >= 0; i--) {
     for(var j = pArray[i].length - 1; j >= 0; j--){
@@ -202,11 +390,20 @@ function draw() {
     }
    }
 
+
+   for(var i = squareArray.length-1; i >= 0; i--) {
+    for(var j = squareArray[i].length - 1; j >= 0; j--){
+        squareArray[i][j].run(); 
+    }
+   }
+
+   
+
    myRender.erase();
    myRender.drawswap();
 
    mySketch.reset();
 
-   return myWindow;
+   
 
 }
