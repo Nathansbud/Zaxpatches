@@ -1,6 +1,7 @@
 autowatch = 1;
 
 var myWindow = new JitterObject("jit.window", "js");
+myWindow.fullscreen = true
 
 
 
@@ -13,7 +14,7 @@ myWindow.enable = 1;
 var myRender = new JitterObject("jit.gl.render", "js");
 
 //background color
-myRender.erase_color = [0.26, 0.35, 0.29, 0.7];
+myRender.erase_color = [0, 0, 0, 0];
 
 var mySketch = new JitterObject("jit.gl.sketch", "js");
 
@@ -33,6 +34,18 @@ var audio3 = 0.2;
 var audio4 = 0.2;
 var audio5 = 0.2;
 
+var Vector = {
+   x: 0.0,
+   y: 0.0,
+   z: 0.0,
+
+   add: function(Vector) {
+       this.x += Vector.x;
+       this.y += Vector.y;
+       this.z += Vector.z;
+   }  
+};
+
 var bar_color = Object.create(Vector);
 bar_color.x = 1.0
 bar_color.y = 0.1
@@ -46,23 +59,6 @@ bar_velocity.z = 0;
 var bar_angle = 0;
 
 var phase = 1; 
-
-
-
-
-
-var Vector = {
-   x: 0.0,
-   y: 0.0,
-   z: 0.0,
-
-   add: function(Vector) {
-       this.x += Vector.x;
-       this.y += Vector.y;
-       this.z += Vector.z;
-   }  
-};
-
 
 function Particle() {
     //make location a vector object (duh)
@@ -118,25 +114,18 @@ squareParticle.prototype.display = function(){
     switch(this.id){
         case 1:
             mySketch.cube(this.size.x, audio1, this.size.z);
-
-        
             break;
         case 2:
             mySketch.cube(this.size.x, audio2, this.size.z);
-
-            
             break;
         case 3:
             mySketch.cube(this.size.x, audio3, this.size.z);
-            
             break;
         case 4:
             mySketch.cube(this.size.x, audio4, this.size.z);
-            
             break;
         case 5:
             mySketch.cube(this.size.x, audio5, this.size.z);
-            
             break;
     }
 }
@@ -146,6 +135,8 @@ Particle.prototype.display = function() {
    var alpha = this.lifespan / 255.0;
    //color of circles
    mySketch.glcolor(this.color.x, this.color.y, this.color.z, alpha);
+   // mySketch.glenable(GL_ALPHA_TEST);
+   // mysketch.alphafunc(GL_GREATER, 1); 
    //radius of circle 0.04
    mySketch.circle(circle_radius);
     //color of outer ring - make random
@@ -156,8 +147,6 @@ Particle.prototype.display = function() {
    mySketch.framecircle(this.lineWidth);
 
    mySketch.shapeslice(num_lines,20);
-   
-  
 };
 
 Particle.prototype.run = function(isMain) {
@@ -224,9 +213,9 @@ function ballChange(num){
         
         case 3:
 
-            currColor.x = 165/255;
-            currColor.y = 162/255;
-            currColor.z = 2/255;
+            currColor.x = 255/255;
+            currColor.y = 0;
+            currColor.z = 0;
 
             if(phase == 3){
 
@@ -239,10 +228,9 @@ function ballChange(num){
             break;
 
         case 4:
-
-            currColor.x = 165/255;
-            currColor.y = 162/255;
-            currColor.z = 2/255;
+            currColor.x = 50/255;
+            currColor.y = 205/255;
+            currColor.z = 50/255;
 
             if(phase == 3){
                 bar_velocity.x = -bar_velocity.x;
@@ -252,9 +240,6 @@ function ballChange(num){
 
             break;
     }
-
-
-
 }
 
 
@@ -292,14 +277,8 @@ function receiveAudio5(num){
     
 }
 
-
-
-
-
 function spawn(){
-
     var subCircles = [];
-
     var circle = new Particle();
     circle.location.x = (Math.random()*2 - 1);
     circle.location.y = (Math.random()*2 - 1);
@@ -311,16 +290,16 @@ function spawn(){
     subCircles.push(circle); 
 
     for(var i = 1; i <= num_rings; i++){
-    var sub_circle = new Particle();
-    sub_circle.location.x = circle.location.x;
-    sub_circle.location.y = circle.location.y;
-    sub_circle.depth = i;
+        var sub_circle = new Particle();
+        sub_circle.location.x = circle.location.x;
+        sub_circle.location.y = circle.location.y;
+        sub_circle.depth = i;
 
-    sub_circle.color.x = circle.color.x;
-    sub_circle.color.y = circle.color.y;
-    sub_circle.color.z = circle.color.z;
-    
-    subCircles.push(sub_circle);
+        sub_circle.color.x = circle.color.x;
+        sub_circle.color.y = circle.color.y;
+        sub_circle.color.z = circle.color.z;
+        
+        subCircles.push(sub_circle);
     }
 
     pArray.push(subCircles);
@@ -331,14 +310,12 @@ function spawn(){
 var squareArray = [];
 
 function spawnSquares(){
-
     var num_squares = 10;
     var sub_squares = []
-    post("hello");
     for(var i = 0; i < num_squares; i++){
         var sub_square = new squareParticle();
         sub_square.size.x = 0.10;
-        sub_square.size.y = audio;
+        sub_square.size.y = audio1;
         sub_square.size.z = 0.00;
         sub_square.location.x = -1 + (i * 0.21);
         sub_square.location.y = 0.0;
@@ -350,7 +327,6 @@ function spawnSquares(){
     }
 
     squareArray.push(sub_squares);
-    
 }
 
 
@@ -372,22 +348,14 @@ function phase3(){
 
 
 function draw() {
-    
-   
   //makes animation endless by adding particles every time draw is called
-  
-   
-
-
-   for(var i = pArray.length-1; i >= 0; i--) {
-    for(var j = pArray[i].length - 1; j >= 0; j--){
-
-        pArray[i][j].run(j == 0);
-        if(pArray[i][j].lineWidth > lineWidth_thresh || pArray[i][j].lifespan < 0) {
-            pArray[i].splice(j, 1);
+    for(var i = pArray.length-1; i >= 0; i--) {
+        for(var j = pArray[i].length - 1; j >= 0; j--){
+            pArray[i][j].run(j == 0);
+            if(pArray[i][j].lineWidth > lineWidth_thresh || pArray[i][j].lifespan < 0) {
+                pArray[i].splice(j, 1);
+            }
         }
-
-    }
    }
 
 
@@ -403,7 +371,4 @@ function draw() {
    myRender.drawswap();
 
    mySketch.reset();
-
-   
-
 }
