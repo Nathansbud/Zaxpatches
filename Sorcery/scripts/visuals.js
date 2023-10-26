@@ -281,7 +281,7 @@ function spawn(){
     var subCircles = [];
     var circle = new Particle();
     circle.location.x = (Math.random()*2 - 1);
-    circle.location.y = (Math.random()*2 - 1);
+    circle.location.y = (Math.random()*1.5 - 1);
 
     circle.color.x = currColor.x
     circle.color.y = currColor.y
