@@ -117,8 +117,8 @@
 					"numinlets" : 1,
 					"numoutlets" : 1,
 					"outlettype" : [ "" ],
-					"patching_rect" : [ 351.666670203208923, 359.0, 102.0, 22.0 ],
-					"text" : "v AUDIO-DEBUG"
+					"patching_rect" : [ 351.666670203208923, 359.0, 101.0, 22.0 ],
+					"text" : "v DEBUG-MODE"
 				}
 
 			}
