@@ -10,7 +10,7 @@
 		}
 ,
 		"classnamespace" : "box",
-		"rect" : [ 248.0, 88.0, 975.0, 700.0 ],
+		"rect" : [ 34.0, 87.0, 964.0, 702.0 ],
 		"bglocked" : 0,
 		"openinpresentation" : 0,
 		"default_fontsize" : 12.0,
@@ -40,6 +40,31 @@
 		"assistshowspatchername" : 0,
 		"boxes" : [ 			{
 				"box" : 				{
+					"comment" : "(float) signal multiplier",
+					"id" : "obj-10",
+					"index" : 5,
+					"maxclass" : "inlet",
+					"numinlets" : 0,
+					"numoutlets" : 1,
+					"outlettype" : [ "" ],
+					"patching_rect" : [ 1078.0, 68.000002145767212, 30.0, 30.0 ]
+				}
+
+			}
+, 			{
+				"box" : 				{
+					"id" : "obj-3",
+					"maxclass" : "newobj",
+					"numinlets" : 2,
+					"numoutlets" : 1,
+					"outlettype" : [ "multichannelsignal" ],
+					"patching_rect" : [ 258.666670203208923, 713.666670918464661, 53.0, 22.0 ],
+					"text" : "mc.*~ 1."
+				}
+
+			}
+, 			{
+				"box" : 				{
 					"id" : "obj-7",
 					"maxclass" : "newobj",
 					"numinlets" : 3,
@@ -64,7 +89,7 @@
 			}
 , 			{
 				"box" : 				{
-					"comment" : "(int) output channel to use",
+					"comment" : "(message) sfplay messages",
 					"id" : "obj-5",
 					"index" : 4,
 					"maxclass" : "inlet",
@@ -131,7 +156,7 @@
 					"numoutlets" : 1,
 					"outlettype" : [ "" ],
 					"patching_rect" : [ 628.666670203208923, 429.000002145767212, 97.0, 22.0 ],
-					"text" : "RobotRock.mp3"
+					"text" : "A5.1.m4a"
 				}
 
 			}
@@ -240,7 +265,7 @@
 					"numinlets" : 0,
 					"numoutlets" : 1,
 					"outlettype" : [ "" ],
-					"patching_rect" : [ 754.0, 56.000002145767212, 30.0, 30.0 ]
+					"patching_rect" : [ 754.0, 61.000002145767212, 30.0, 30.0 ]
 				}
 
 			}
@@ -278,7 +303,7 @@
 					"maxclass" : "outlet",
 					"numinlets" : 1,
 					"numoutlets" : 0,
-					"patching_rect" : [ 295.666670203208923, 706.666670918464661, 30.0, 30.0 ]
+					"patching_rect" : [ 325.333340406417847, 705.666670918464661, 30.0, 30.0 ]
 				}
 
 			}
@@ -313,7 +338,7 @@
 					"maxclass" : "outlet",
 					"numinlets" : 1,
 					"numoutlets" : 0,
-					"patching_rect" : [ 369.666670203208923, 706.666670918464661, 30.0, 30.0 ]
+					"patching_rect" : [ 399.333340406417847, 705.666670918464661, 30.0, 30.0 ]
 				}
 
 			}
@@ -397,7 +422,7 @@
 					"numoutlets" : 1,
 					"outlettype" : [ "" ],
 					"patching_rect" : [ 471.666670203208923, 155.000002145767212, 97.0, 22.0 ],
-					"text" : "RobotRock.mp3"
+					"text" : "A5.1.m4a"
 				}
 
 			}
@@ -418,6 +443,13 @@
 				"patchline" : 				{
 					"destination" : [ "obj-2", 0 ],
 					"source" : [ "obj-1", 0 ]
+				}
+
+			}
+, 			{
+				"patchline" : 				{
+					"destination" : [ "obj-3", 1 ],
+					"source" : [ "obj-10", 0 ]
 				}
 
 			}
@@ -567,6 +599,13 @@
 			}
 , 			{
 				"patchline" : 				{
+					"destination" : [ "obj-21", 0 ],
+					"source" : [ "obj-3", 0 ]
+				}
+
+			}
+, 			{
+				"patchline" : 				{
 					"destination" : [ "obj-27", 0 ],
 					"source" : [ "obj-36", 0 ]
 				}
@@ -695,7 +734,7 @@
 			}
 , 			{
 				"patchline" : 				{
-					"destination" : [ "obj-21", 0 ],
+					"destination" : [ "obj-3", 0 ],
 					"source" : [ "obj-9", 0 ]
 				}
 
